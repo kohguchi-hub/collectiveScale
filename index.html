@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>集団主義・個人主義傾向診断</title>
+
+<style>
+
+body{
+font-family:sans-serif;
+background:#f5f7fa;
+margin:0;
+padding:20px;
+}
+
+.container{
+max-width:800px;
+margin:auto;
+background:white;
+padding:20px;
+border-radius:15px;
+box-shadow:0 0 10px rgba(0,0,0,0.1);
+}
+
+h1{
+text-align:center;
+color:#1565c0;
+}
+
+.question{
+margin-bottom:20px;
+padding:15px;
+background:#fafafa;
+border-radius:10px;
+}
+
+.question p{
+font-weight:bold;
+}
+
+select,input{
+width:100%;
+padding:10px;
+font-size:16px;
+}
+
+button{
+width:100%;
+padding:15px;
+font-size:18px;
+background:#1565c0;
+color:white;
+border:none;
+border-radius:10px;
+cursor:pointer;
+}
+
+button:hover{
+background:#0d47a1;
+}
+
+#result{
+display:none;
+margin-top:30px;
+padding:20px;
+background:#eef4ff;
+border-radius:10px;
+}
+
+.score{
+font-size:32px;
+font-weight:bold;
+text-align:center;
+color:#1565c0;
+}
+
+.curve-container{
+position:relative;
+margin-top:30px;
+}
+
+.curve{
+width:100%;
+}
+
+.marker{
+position:absolute;
+top:-10px;
+transform:translateX(-50%);
+font-size:28px;
+color:red;
+}
+
+.marker-label{
+position:absolute;
+top:-35px;
+transform:translateX(-50%);
+font-size:12px;
+color:red;
+font-weight:bold;
+}
+
+.labels{
+position:relative;
+height:55px;
+margin-top:8px;
+}
+
+.label{
+position:absolute;
+transform:translateX(-50%);
+text-align:center;
+line-height:1.2;
+font-size:12px;
+}
+
+.zones{
+display:flex;
+height:40px;
+border-radius:8px;
+overflow:hidden;
+margin-top:10px;
+}
+.individual{
+    width:35.45%;
+    background:#42a5f5;
+    color:white;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:12px;
+}
+
+.normal{
+    width:22.57%;
+    background:#66bb6a;
+    color:white;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:12px;
+}
+
+.collectivist{
+    width:41.98%;
+    background:#ffa726;
+    color:white;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:12px;
+}
+
+.labels{
+display:flex;
+justify-content:space-between;
+font-size:12px;
+margin-top:8px;
+}
+
+.judgement{
+margin-top:20px;
+background:white;
+padding:15px;
+border-radius:10px;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="card">
+
+<h1 class="main-title">
+集団主義/<br>
+個人主義テスト
+</h1>
+
+<p>
+これから、あなたが集団の中でどのように行動する傾向があるかについてお尋ねします。<br><br>
+
+以下の質問は、友人同士の集まりやグループ活動の場面での、あなたの考え方や行動に関するものです。<br><br>
+
+5：よくあてはまる<br>
+4：どちらかといえばあてはまる<br>
+3：どちらともいえない<br>
+2：どちらかといえばあてはまらない<br>
+1：まったくあてはまらない
+</p>
+
+<div class="question">
+<p>年齢</p>
+<input type="number" id="age">
+</div>
+
+<div class="question">
+<p>性別</p>
+<select id="gender">
+<option value="男性">男性</option>
+<option value="女性">女性</option>
+<option value="その他">その他</option>
+<option value="回答しない">回答しない</option>
+</select>
+</div>
+
+<form id="testForm"></form>
+
+<button id="submitButton" onclick="calculateScore()">
+結果を見る
+</button>
+
+<div id="result">
+
+<div class="score" id="scoreDisplay"></div>
+
+<div class="curve-container">
+
+<div id="markerLabel" class="marker-label">
+あなた
+</div>
+
+<div id="marker" class="marker">
+▼
+</div>
+
+<svg class="curve" viewBox="0 0 400 120">
+
+  <!-- -1SD -->
+  <line x1="142" y1="10"
+        x2="142" y2="120"
+        stroke="#bbb"
+        stroke-dasharray="4,4"/>
+
+  <!-- 平均 -->
+  <line x1="187" y1="10"
+        x2="187" y2="120"
+        stroke="#888"
+        stroke-dasharray="4,4"/>
+
+  <!-- +1SD -->
+  <line x1="232" y1="10"
+        x2="232" y2="120"
+        stroke="#bbb"
+        stroke-dasharray="4,4"/>
+
+  <path
+    d="M0,110
+       C80,110
+       120,30
+       187,10
+       C254,30
+       320,110
+       400,110"
+    fill="none"
+    stroke="#333"
+    stroke-width="4"/>
+
+</svg>
+
+<div class="zones">
+<div class="individual">個人主義傾向</div>
+<div class="normal">標準範囲</div>
+<div class="collectivist">集団主義傾向</div>
+</div>
+
+<div class="labels">
+
+<div class="label" style="left:49.1%;">
+33.85<br>-1SD
+</div>
+
+<div class="label" style="left:63.9%;">
+40.17<br>平均
+</div>
+
+<div class="label" style="left:78.7%;">
+46.49<br>+1SD
+</div>
+
+</div>
+
+<div class="judgement">
+<h3 id="judgeTitle"></h3>
+<p id="judgeText"></p>
+</div>
+
+</div>
+
+</div>
+
+<script>
+const questions = [
+
+"自分の友人たちのために自分の利益を犠牲にすることはない",
+
+"友人たちの望むように行動する必要はないと思う",
+
+"困難な状況にあっても自分の友人グループに留まる",
+
+"自分の友人たちの和を保っている",
+
+"多数の人の意見に合わせて、自分の意見を変えることはない",
+
+"自分の友人グループが間違っているときには、その友人たちを支持しない",
+
+"自分の友人たちの決定を尊重する",
+
+"自分の友人たちに不満でも、必要とされれば、その友人グループに留まる",
+
+"友人グループの仲間と非常に意見が違っているときは、仲間と反対の意見でも主張する",
+
+"友人たちと意見の不一致を生じないようにする",
+
+"自分の友人たちでも、間違っていると思ったら、それをとがめる",
+
+"友人たちのために自分の利益を犠牲にしなければならないのならその友人グループを離れた方がよい",
+
+"友人たちがどう思おうと、私は自分のやり方でものごとを行う",
+
+"友人たちに支持されなくても、自分の意見を変えない"
+
+];
+
+const form =
+document.getElementById("testForm");
+
+questions.forEach((q,index)=>{
+
+form.innerHTML += `
+
+<div class="question">
+
+<p>
+${index+1}. ${q}
+</p>
+
+<select name="q${index+1}">
+
+<option value="5">
+5：よくあてはまる
+</option>
+
+<option value="4">
+4：どちらかといえばあてはまる
+</option>
+
+<option value="3">
+3：どちらともいえない
+</option>
+
+<option value="2">
+2：どちらかといえばあてはまらない
+</option>
+
+<option value="1">
+1：まったくあてはまらない
+</option>
+
+</select>
+
+</div>
+
+`;
+
+});
+
+function calculateScore(){
+
+const button =
+document.getElementById("submitButton");
+
+button.disabled = true;
+button.innerText = "送信済み";
+button.style.backgroundColor = "#999";
+
+let total = 0;
+
+for(let i=1;i<=14;i++){
+
+const value =
+Number(
+document.querySelector(
+`[name="q${i}"]`
+).value
+);
+
+if([3,4,7,8,10].includes(i)){
+
+total += value;
+
+}
+else{
+
+total += (6-value);
+
+}
+
+}
+
+document.getElementById("result")
+.style.display = "block";
+
+document.getElementById(
+"scoreDisplay"
+).innerHTML =
+`総合計得点<br>${total}点`;
+
+const position =
+((total-14)/(70-14))*100;
+
+document.getElementById("marker")
+.style.left = position + "%";
+
+document.getElementById(
+"markerLabel"
+).style.left = position + "%";
+
+let title = "";
+let description = "";
+let judgementType = "";
+
+if(total < 33.85){
+
+judgementType =
+"個人主義傾向";
+
+title =
+"🟦 個人主義傾向";
+
+description =
+"あなたの得点は平均より1標準偏差以上低い水準でした。友人グループの意見や期待よりも、自分自身の考えや判断を重視する傾向がみられます。";
+
+}
+else if(total >= 46.49){
+
+judgementType =
+"集団主義傾向";
+
+title =
+"🟧 集団主義傾向";
+
+description =
+"あなたの得点は平均より1標準偏差以上高い水準でした。友人グループとの結びつきや協調、帰属意識を重視する傾向がみられます。";
+
+}
+else{
+
+judgementType =
+"標準範囲";
+
+title =
+"🟩 標準範囲";
+
+description =
+"あなたの得点は平均的な範囲でした。集団との協調と個人の考えをバランスよく重視する傾向があります。";
+
+}
+
+document.getElementById(
+"judgeTitle"
+).innerHTML = title;
+
+document.getElementById(
+"judgeText"
+).innerHTML = description;
+const age =
+document.getElementById("age").value;
+
+const gender =
+document.getElementById("gender").value;
+
+const payload = {
+
+timestamp:
+new Date().toLocaleString("ja-JP"),
+
+age: age,
+
+gender: gender,
+
+q1:Number(document.querySelector('[name="q1"]').value),
+q2:Number(document.querySelector('[name="q2"]').value),
+q3:Number(document.querySelector('[name="q3"]').value),
+q4:Number(document.querySelector('[name="q4"]').value),
+q5:Number(document.querySelector('[name="q5"]').value),
+q6:Number(document.querySelector('[name="q6"]').value),
+q7:Number(document.querySelector('[name="q7"]').value),
+q8:Number(document.querySelector('[name="q8"]').value),
+q9:Number(document.querySelector('[name="q9"]').value),
+q10:Number(document.querySelector('[name="q10"]').value),
+q11:Number(document.querySelector('[name="q11"]').value),
+q12:Number(document.querySelector('[name="q12"]').value),
+q13:Number(document.querySelector('[name="q13"]').value),
+q14:Number(document.querySelector('[name="q14"]').value),
+
+score: total,
+
+judgement: judgementType
+
+};
+
+fetch(
+"https://script.google.com/macros/s/AKfycbwbFIwtZhmyscdS_V3CG3Pu8oA-tkolM2dAJoie6aruDyLUPZ1Xc1dkmSfeJ--M1btL/exec",
+{
+method:"POST",
+mode:"no-cors",
+body:JSON.stringify(payload)
+}
+)
+.catch(error => console.error(error));
+
+window.scrollTo({
+top:document.body.scrollHeight,
+behavior:"smooth"
+});
+
+}
+
+</script>
+
+</body>
+</html>
