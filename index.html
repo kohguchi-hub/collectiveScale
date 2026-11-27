@@ -152,12 +152,7 @@ margin-top:10px;
     font-size:12px;
 }
 
-.labels{
-display:flex;
-justify-content:space-between;
-font-size:12px;
-margin-top:8px;
-}
+
 
 .judgement{
 margin-top:20px;
@@ -225,39 +220,51 @@ border-radius:10px;
 ▼
 </div>
 
+
 <svg class="curve" viewBox="0 0 400 120">
 
   <!-- -1SD -->
-  <line x1="142" y1="10"
-        x2="142" y2="120"
-        stroke="#bbb"
-        stroke-dasharray="4,4"/>
+  <line
+    x1="142"
+    y1="10"
+    x2="142"
+    y2="120"
+    stroke="#bbb"
+    stroke-dasharray="4,4"/>
 
   <!-- 平均 -->
-  <line x1="187" y1="10"
-        x2="187" y2="120"
-        stroke="#888"
-        stroke-dasharray="4,4"/>
+  <line
+    x1="200"
+    y1="10"
+    x2="200"
+    y2="120"
+    stroke="#888"
+    stroke-width="2"
+    stroke-dasharray="4,4"/>
 
   <!-- +1SD -->
-  <line x1="232" y1="10"
-        x2="232" y2="120"
-        stroke="#bbb"
-        stroke-dasharray="4,4"/>
+  <line
+    x1="258"
+    y1="10"
+    x2="258"
+    y2="120"
+    stroke="#bbb"
+    stroke-dasharray="4,4"/>
 
   <path
     d="M0,110
-       C80,110
-       120,30
-       187,10
-       C254,30
-       320,110
+       C70,100
+       140,35
+       200,10
+       C260,35
+       330,100
        400,110"
     fill="none"
     stroke="#333"
     stroke-width="4"/>
 
 </svg>
+
 
 <div class="zones">
 <div class="individual">個人主義傾向</div>
@@ -267,19 +274,20 @@ border-radius:10px;
 
 <div class="labels">
 
-<div class="label" style="left:49.1%;">
-33.85<br>-1SD
+  <div class="label" style="left:35.5%;">
+    33.85<br>-1SD
+  </div>
+
+  <div class="label" style="left:50%;">
+    40.17<br>平均
+  </div>
+
+  <div class="label" style="left:64.5%;">
+    46.49<br>+1SD
+  </div>
+
 </div>
 
-<div class="label" style="left:63.9%;">
-40.17<br>平均
-</div>
-
-<div class="label" style="left:78.7%;">
-46.49<br>+1SD
-</div>
-
-</div>
 
 <div class="judgement">
 <h3 id="judgeTitle"></h3>
